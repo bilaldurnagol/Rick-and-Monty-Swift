@@ -29,4 +29,20 @@ class APICaller {
             } 
         }).resume()
     }
+    
+    func getCharacterDetails(with id: Int, completion: @escaping ((Result<ResultResponse, Error>) -> Void)) {
+        guard let url = URL(string: "https://rickandmortyapi.com/api/character/\(id)") else {return}
+        URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
+            guard let data = data, error == nil else {
+                completion(.failure(APIError.failedToGetCharacters))
+                return
+            }
+            do {
+                let character = try JSONDecoder().decode(ResultResponse.self, from: data)
+                completion(.success(character))
+            }catch {
+                completion(.failure(error))
+            }
+        }).resume()
+    }
 }
