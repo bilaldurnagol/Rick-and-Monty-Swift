@@ -17,6 +17,9 @@
 		B5B46312264AA40A007EB8EA /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B46311264AA40A007EB8EA /* AppCoordinator.swift */; };
 		B5B46315264AC362007EB8EA /* CharacterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B46314264AC362007EB8EA /* CharacterCollectionViewCell.swift */; };
 		B5B46318264ACD25007EB8EA /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B46317264ACD25007EB8EA /* UIView+Extensions.swift */; };
+		B5B4631A264AD0F3007EB8EA /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B46319264AD0F3007EB8EA /* APICaller.swift */; };
+		B5B4631C264AD26C007EB8EA /* Characters.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4631B264AD26C007EB8EA /* Characters.swift */; };
+		B5B4631E264ADAA6007EB8EA /* CharacterListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4631D264ADAA6007EB8EA /* CharacterListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +36,9 @@
 		B5B46311264AA40A007EB8EA /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		B5B46314264AC362007EB8EA /* CharacterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionViewCell.swift; sourceTree = "<group>"; };
 		B5B46317264ACD25007EB8EA /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		B5B46319264AD0F3007EB8EA /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		B5B4631B264AD26C007EB8EA /* Characters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Characters.swift; sourceTree = "<group>"; };
+		B5B4631D264ADAA6007EB8EA /* CharacterListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewModel.swift; sourceTree = "<group>"; };
 		C270A742A6000F449A8BD2D2 /* Pods-Rick and Monty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rick and Monty.release.xcconfig"; path = "Target Support Files/Pods-Rick and Monty/Pods-Rick and Monty.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,7 +98,7 @@
 		B5B4630A264AA33E007EB8EA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B5B462FA264AA2AC007EB8EA /* CharactersViewController.swift */,
+				B5B4631F264AFC07007EB8EA /* Core */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -111,6 +117,7 @@
 		B5B4630C264AA349007EB8EA /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				B5B4631D264ADAA6007EB8EA /* CharacterListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -126,6 +133,7 @@
 		B5B4630E264AA35F007EB8EA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B5B4631B264AD26C007EB8EA /* Characters.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,6 +151,7 @@
 		B5B46310264AA3A8007EB8EA /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				B5B46319264AD0F3007EB8EA /* APICaller.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -161,6 +170,14 @@
 				B5B46317264ACD25007EB8EA /* UIView+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B5B4631F264AFC07007EB8EA /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B5B462FA264AA2AC007EB8EA /* CharactersViewController.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		DAC72A5E58ED915F729C69A8 /* Pods */ = {
@@ -289,6 +306,9 @@
 				B5B46318264ACD25007EB8EA /* UIView+Extensions.swift in Sources */,
 				B5B46315264AC362007EB8EA /* CharacterCollectionViewCell.swift in Sources */,
 				B5B46312264AA40A007EB8EA /* AppCoordinator.swift in Sources */,
+				B5B4631C264AD26C007EB8EA /* Characters.swift in Sources */,
+				B5B4631E264ADAA6007EB8EA /* CharacterListViewModel.swift in Sources */,
+				B5B4631A264AD0F3007EB8EA /* APICaller.swift in Sources */,
 				B5B462FB264AA2AC007EB8EA /* CharactersViewController.swift in Sources */,
 				B5B462F7264AA2AC007EB8EA /* AppDelegate.swift in Sources */,
 				B5B462F9264AA2AC007EB8EA /* SceneDelegate.swift in Sources */,
