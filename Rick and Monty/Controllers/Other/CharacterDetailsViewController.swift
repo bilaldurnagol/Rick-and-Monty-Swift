@@ -60,7 +60,7 @@ class CharacterDetailsViewController: UIViewController {
     private let episodeTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self,
-            forCellReuseIdentifier: "cell")
+                           forCellReuseIdentifier: "cell")
         tableView.layer.cornerRadius = 8.0
         tableView.separatorStyle = .none
         tableView.isHidden = true
@@ -69,6 +69,7 @@ class CharacterDetailsViewController: UIViewController {
     
     private var isClicked = false
     private var character: ResultResponse?
+    private var episodes: [Eposide]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,19 +89,6 @@ class CharacterDetailsViewController: UIViewController {
             target: self,
             action: #selector(didTapDone)
         )
-        
-        APICaller.shared.getCharacterDetails(with: 1, completion: {[weak self] result in
-            switch result {
-            case .failure(_): break
-            case .success(let character):
-                DispatchQueue.main.async {
-                    self?.character = character
-                    self?.episodeTableView.reloadData()
-                    self?.configure(with: character)
-                    
-                }
-            }
-        })
     }
     
     override func viewDidLayoutSubviews() {
@@ -138,19 +126,21 @@ class CharacterDetailsViewController: UIViewController {
         
     }
     
-    private func configure(with character: ResultResponse?) {
+    func configure(with character: ResultResponse?) {
         guard let character = character else {return}
+        self.character = character
+        
         nameLabel.text = character.name
         speciesLabel.text = "\(character.species), \(character.status)"
         genderLabel.text = character.gender
         characterImageView.sd_setImage(with: URL(string: character.image), completed: nil)
-        
+        episodeTableView.reloadData()
     }
     
     //MARK: - objc
     
     @objc private func didTapDone() {
-        print("tapped")
+        dismiss(animated: true, completion: nil)
     }
     
     @objc private func didTapDropDownButton() {
@@ -167,7 +157,6 @@ class CharacterDetailsViewController: UIViewController {
                 self.episodeButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
             }
         }
-    
     }
 }
 
@@ -180,37 +169,16 @@ extension CharacterDetailsViewController: UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let episode = character?.episode[indexPath.row]
-        cell.textLabel?.text = episode
-        
-        let url = URL(string: episode!)
-        if let path = URLComponents(string: episode ?? "")?.path.last {
-            print(path)
-        }
-        cell.accessoryView = .none
+        APICaller.shared.getEposide(with: episode?.lastPath , completion: {episode in
+            DispatchQueue.main.async {
+                cell.textLabel?.text = episode
+            }
+        })
         cell.backgroundColor = .secondarySystemBackground
         return cell
     }
     
-    
-}
-extension URL {
-    func valueOf(_ queryParamaterName: String) -> String? {
-        guard let url = URLComponents(string: self.absoluteString) else { return nil }
-        return url.queryItems?.first(where: { $0.name == queryParamaterName })?.value
-    }
-}
-
-extension URL {
-    var params: [String: String]? {
-        if let urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: true) {
-            if let queryItems = urlComponents.queryItems {
-                var params = [String: String]()
-                queryItems.forEach{
-                    params[$0.name] = $0.value
-                }
-                return params
-            }
-        }
-        return nil
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

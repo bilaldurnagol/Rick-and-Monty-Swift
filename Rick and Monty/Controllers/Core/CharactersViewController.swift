@@ -126,4 +126,20 @@ extension CharactersViewController: UICollectionViewDelegate, UICollectionViewDa
         cell.configure(with: character)
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        guard let id = characters?.results[indexPath.row].id else {return}
+        APICaller.shared.getCharacterDetails(with: id , completion: {[weak self] result in
+            switch result {
+            case .failure(_): break
+            case .success(let character):
+                DispatchQueue.main.async {
+                    let vc = CharacterDetailsViewController()
+                    vc.configure(with: character)
+                   let nav = UINavigationController(rootViewController: vc)
+                    self?.present(nav, animated: true)
+                }
+            }
+        })
+    }
 }

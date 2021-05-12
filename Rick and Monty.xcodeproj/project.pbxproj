@@ -22,6 +22,8 @@
 		B5B4631E264ADAA6007EB8EA /* CharacterListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4631D264ADAA6007EB8EA /* CharacterListViewModel.swift */; };
 		B5B46322264AFD0B007EB8EA /* CharacterDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B46321264AFD0B007EB8EA /* CharacterDetailsViewController.swift */; };
 		B5B46324264B08E5007EB8EA /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B46323264B08E5007EB8EA /* UIButton+Extensions.swift */; };
+		B5B46326264B333F007EB8EA /* Eposide.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B46325264B333F007EB8EA /* Eposide.swift */; };
+		B5B46328264B34F7007EB8EA /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B46327264B34F7007EB8EA /* String+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		B5B4631D264ADAA6007EB8EA /* CharacterListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewModel.swift; sourceTree = "<group>"; };
 		B5B46321264AFD0B007EB8EA /* CharacterDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsViewController.swift; sourceTree = "<group>"; };
 		B5B46323264B08E5007EB8EA /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		B5B46325264B333F007EB8EA /* Eposide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eposide.swift; sourceTree = "<group>"; };
+		B5B46327264B34F7007EB8EA /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		C270A742A6000F449A8BD2D2 /* Pods-Rick and Monty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rick and Monty.release.xcconfig"; path = "Target Support Files/Pods-Rick and Monty/Pods-Rick and Monty.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				B5B4631B264AD26C007EB8EA /* Characters.swift */,
+				B5B46325264B333F007EB8EA /* Eposide.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -174,6 +179,7 @@
 			children = (
 				B5B46317264ACD25007EB8EA /* UIView+Extensions.swift */,
 				B5B46323264B08E5007EB8EA /* UIButton+Extensions.swift */,
+				B5B46327264B34F7007EB8EA /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -318,10 +324,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5B46318264ACD25007EB8EA /* UIView+Extensions.swift in Sources */,
+				B5B46328264B34F7007EB8EA /* String+Extensions.swift in Sources */,
 				B5B46315264AC362007EB8EA /* CharacterCollectionViewCell.swift in Sources */,
 				B5B46312264AA40A007EB8EA /* AppCoordinator.swift in Sources */,
 				B5B4631C264AD26C007EB8EA /* Characters.swift in Sources */,
 				B5B4631E264ADAA6007EB8EA /* CharacterListViewModel.swift in Sources */,
+				B5B46326264B333F007EB8EA /* Eposide.swift in Sources */,
 				B5B4631A264AD0F3007EB8EA /* APICaller.swift in Sources */,
 				B5B462FB264AA2AC007EB8EA /* CharactersViewController.swift in Sources */,
 				B5B46322264AFD0B007EB8EA /* CharacterDetailsViewController.swift in Sources */,

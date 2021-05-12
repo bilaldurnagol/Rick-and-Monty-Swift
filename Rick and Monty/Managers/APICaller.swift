@@ -45,4 +45,20 @@ class APICaller {
             }
         }).resume()
     }
+    
+    func getEposide(with id: String?, completion: @escaping (String) -> Void) {
+//        let myString = id.joined(separator: ",")
+//        print(String(myString))
+        guard let id = id else {return}
+        guard let url = URL(string: "https://rickandmortyapi.com/api/episode/\(id)") else {return}
+        URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
+            guard let data = data, error == nil else { return }
+            do {
+                let eposide = try JSONDecoder().decode(Eposide.self, from: data)
+                completion("\(eposide.name) (\(eposide.episode))")
+            }catch {
+             
+            }
+        }).resume()
+    }
 }
