@@ -7,32 +7,64 @@
 
 import Foundation
 
-class CharacterListViewModel {
-    
-    private var characterViewModels = [ResultResponse]()
-    
-    func numberOfRows(_ section: Int) -> Int {
-        return characterViewModels.count
+
+struct CharacterListViewModel {
+    let characters: [Character]
+}
+
+extension CharacterListViewModel {
+    var numberOfSections: Int {
+        return 1
     }
     
-    func modelAt(_ index: Int) -> ResultResponse {
-        return characterViewModels[index]
+    func numberOfRowsInSection(_ section: Int) -> Int {
+        return self.characters.count
+    }
+    
+    func characterAtIndex(_ index: Int) -> CharacterViewModel {
+        let character = self.characters[index]
+        return CharacterViewModel(character)
     }
 }
 
-//class WeatherListViewModel {
-//
-//    private var weatherViewModels = [WeatherViewModel]()
-//
-//    func addWeatherViewModel(_ vm: WeatherViewModel) {
-//        weatherViewModels.append(vm)
-//    }
-//
-//    func numberOfRows(_ section: Int) -> Int {
-//        return weatherViewModels.count
-//    }
-//
-//    func modelAt(_ index: Int) -> WeatherViewModel {
-//        return weatherViewModels[index]
-//    }
-//}
+struct CharacterViewModel {
+    private let character: Character
+}
+
+extension CharacterViewModel {
+    init(_ character: Character) {
+        self.character = character
+    }
+}
+
+extension CharacterViewModel {
+    
+    var id: Int {
+        return self.character.id
+    }
+    
+    var name: String {
+        return self.character.name
+    }
+    
+    var imageURL: String {
+        return self.character.image
+    }
+    
+    var status: String {
+        return self.character.status
+    }
+    
+    var species: String {
+        return self.character.species
+    }
+    
+    var gender: String {
+        return self.character.gender
+    }
+    var episode: [String] {
+        return self.character.episode
+    }
+    
+}
+

@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 extension String {
     var lastPath: String? {
         let urlArray = self.components(separatedBy: "/")

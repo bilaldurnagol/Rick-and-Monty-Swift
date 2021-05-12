@@ -10,10 +10,19 @@ import SnapKit
 
 class CharacterDetailsViewController: UIViewController {
     
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.style = .large
+        spinner.color = .label
+        spinner.hidesWhenStopped = true
+        spinner.startAnimating()
+        return spinner
+    }()
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 28, weight: .bold)
-        label.text = "bilal durnagol"
         label.textColor = .label
         return label
     }()
@@ -21,7 +30,6 @@ class CharacterDetailsViewController: UIViewController {
     private let speciesLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .bold)
-        label.text = "bilal durnagol"
         label.textColor = .label
         return label
     }()
@@ -29,14 +37,12 @@ class CharacterDetailsViewController: UIViewController {
     private let genderLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.text = "bilal durnagol"
         label.textColor = .label
         return label
     }()
     
     private let characterImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
         imageView.layer.cornerRadius = 45
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
@@ -68,27 +74,47 @@ class CharacterDetailsViewController: UIViewController {
     }()
     
     private var isClicked = false
-    private var character: ResultResponse?
-    private var episodes: [Eposide]?
+    private var characterViewModel: CharacterViewModel!
+    private var eposideListViewModel: EposideListViewModel!
+    private var alert = CustomAlert()
+    
+    private var id: Int?
+    
+    init(id: Int) {
+        self.id = id
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        view.addSubview(nameLabel)
-        view.addSubview(genderLabel)
-        view.addSubview(speciesLabel)
-        view.addSubview(characterImageView)
-        view.addSubview(episodeButton)
-        view.addSubview(episodeTableView)
+        setupView()
         
-        episodeTableView.delegate = self
-        episodeTableView.dataSource = self
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
-            target: self,
-            action: #selector(didTapDone)
-        )
+        APICaller.shared.getCharacterDetails(with: id!, completion: {[weak self] result in
+            switch result {
+            case .success(let character):
+                DispatchQueue.main.async {
+                    self?.characterViewModel = CharacterViewModel(character)
+                    self?.configure(with: self?.characterViewModel)
+                    APICaller.shared.getEposide(with: self?.characterViewModel.episode, completion: {eposides in
+                        DispatchQueue.main.async {
+                            self?.eposideListViewModel = EposideListViewModel(eposides: eposides)
+                            self?.episodeTableView.reloadData()
+                            self?.spinner.stopAnimating()
+                        }
+                    })
+                }
+            case .failure(_):
+                self?.alert.showAlert(
+                    with: "Character Details Not Fetched",
+                    message: "Check your internet connection and try again later. If there is a problem, we are trying to solve it.",
+                    on: self!)
+                
+            }
+        })
     }
     
     override func viewDidLayoutSubviews() {
@@ -121,19 +147,42 @@ class CharacterDetailsViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(280)
         }
+        spinner.snp.makeConstraints{ make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+        
         episodeButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: (episodeButton.bounds.width - 35), bottom: 5, right: 5)
         episodeButton.addTarget(self, action: #selector(didTapDropDownButton), for: .touchUpInside)
-        
     }
     
-    func configure(with character: ResultResponse?) {
-        guard let character = character else {return}
-        self.character = character
+    private func setupView() {
+        view.backgroundColor = .systemBackground
+        spinner.startAnimating()
+        view.addSubview(nameLabel)
+        view.addSubview(genderLabel)
+        view.addSubview(speciesLabel)
+        view.addSubview(characterImageView)
+        view.addSubview(episodeButton)
+        view.addSubview(episodeTableView)
+        view.addSubview(spinner)
         
+        episodeTableView.delegate = self
+        episodeTableView.dataSource = self
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(didTapDone)
+        )
+    }
+    
+    private func configure(with character: CharacterViewModel?) {
+        guard let character = character else {return}
         nameLabel.text = character.name
         speciesLabel.text = "\(character.species), \(character.status)"
         genderLabel.text = character.gender
-        characterImageView.sd_setImage(with: URL(string: character.image), completed: nil)
+        characterImageView.sd_setImage(with: URL(string: character.imageURL), completed: nil)
         episodeTableView.reloadData()
     }
     
@@ -160,20 +209,18 @@ class CharacterDetailsViewController: UIViewController {
     }
 }
 
-
 extension CharacterDetailsViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.eposideListViewModel == nil ? 0: self.eposideListViewModel.numberOfSections
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return character?.episode.count ?? 0
+        return eposideListViewModel.numberOfRowsInSection(section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let episode = character?.episode[indexPath.row]
-        APICaller.shared.getEposide(with: episode?.lastPath , completion: {episode in
-            DispatchQueue.main.async {
-                cell.textLabel?.text = episode
-            }
-        })
+        let eposide = eposideListViewModel.characterAtIndex(indexPath.row)
+        cell.textLabel?.text = eposide.eposideName
         cell.backgroundColor = .secondarySystemBackground
         return cell
     }

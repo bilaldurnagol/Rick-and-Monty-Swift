@@ -57,9 +57,8 @@ class CharacterCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configure(with character: ResultResponse?) {
-        guard let character = character else {return}
-        characterImageView.sd_setImage(with: URL(string: character.image), completed: nil)
+    func configure(with character: CharacterViewModel) {
+        characterImageView.sd_setImage(with: URL(string: character.imageURL), completed: nil)
         nameLabel.text = character.name
     }
 }

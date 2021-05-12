@@ -36,29 +36,33 @@ class CharactersViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    private var characters: Characters?
+    private var characterListViewModel: CharacterListViewModel!
+    
+    private let alert = CustomAlert()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
         setupCollectionView()
-        view.addSubview(spinner)
-        view.addSubview(emptyLabel)
-        
-        APICaller.shared.getCharacters(completion: {[weak self]result in
+        configure()
+  
+        APICaller.shared.getCharacters(completion: {[weak self] result in
             switch result {
-            case .failure(let error): print(error)
+            case .failure(_):
+                self?.alert.showAlert(
+                    with: "Characters Not Fetched",
+                    message: "Check your internet connection and try again later. If there is a problem, we are trying to solve it.",
+                    on: self!)
             case .success(let characters):
+                self?.characterListViewModel = CharacterListViewModel(characters: characters)
                 DispatchQueue.main.async {
-                    if characters.results.isEmpty {
+                    if characters.isEmpty {
                         self?.emptyLabel.isHidden = false
                     } else {
-                        self?.characters = characters
                         self?.collectionView?.reloadData()
                         self?.spinner.stopAnimating()
                         self?.collectionView?.isHidden = false
                     }
-                    
                 }
             }
         })
@@ -78,22 +82,17 @@ class CharactersViewController: UIViewController {
             make.centerY.equalToSuperview()
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
         }
-        
     }
     
     //MARK: - Configure
     
     //setup large navigation bar
     private func setupNavBar() {
-        navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Characters"
     }
-    
+    // setup collection view
     private func setupCollectionView() {
-        // setup collection view
-        collectionView?.backgroundColor = .systemBackground
-        
         layout.itemSize = CGSize(
             width: view.width/2,
             height: (view.height - view.safeAreaInsets.top)/3
@@ -111,35 +110,38 @@ class CharactersViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.isHidden = true
+        collectionView.backgroundColor = .systemBackground
         view.addSubview(collectionView)
+    }
+    
+    private func configure() {
+        view.addSubview(spinner)
+        view.addSubview(emptyLabel)
     }
 }
 
 extension CharactersViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return self.characterListViewModel == nil ? 0: self.characterListViewModel.numberOfSections
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return characters?.results.count ?? 0
+        return self.characterListViewModel.numberOfRowsInSection(section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterCollectionViewCell.identifier, for: indexPath) as! CharacterCollectionViewCell
-        let character = characters?.results[indexPath.row]
-        cell.configure(with: character)
+        
+        let characterViewModel = self.characterListViewModel.characterAtIndex(indexPath.row)
+        
+        cell.configure(with: characterViewModel)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        guard let id = characters?.results[indexPath.row].id else {return}
-        APICaller.shared.getCharacterDetails(with: id , completion: {[weak self] result in
-            switch result {
-            case .failure(_): break
-            case .success(let character):
-                DispatchQueue.main.async {
-                    let vc = CharacterDetailsViewController()
-                    vc.configure(with: character)
-                   let nav = UINavigationController(rootViewController: vc)
-                    self?.present(nav, animated: true)
-                }
-            }
-        })
+       let id = self.characterListViewModel.characterAtIndex(indexPath.row).id
+        let vc = CharacterDetailsViewController(id: id)
+        let nav = UINavigationController(rootViewController: vc)
+        self.present(nav, animated: true)
     }
 }

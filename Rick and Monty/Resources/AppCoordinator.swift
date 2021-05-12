@@ -17,6 +17,7 @@ class AppCoordinator {
     func start() {
         let vc = CharactersViewController()
         let nav = UINavigationController(rootViewController: vc)
+        nav.navigationItem.largeTitleDisplayMode = .always
         window.rootViewController = nav
         window.rootViewController?.view.backgroundColor = .systemBackground
         window.makeKeyAndVisible()

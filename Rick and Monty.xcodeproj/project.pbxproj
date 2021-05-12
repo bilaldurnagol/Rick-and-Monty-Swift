@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9FF5F6433D00C5467CE5041E /* Pods_Rick_and_Monty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52443D63F3FFD4B0FA8869B1 /* Pods_Rick_and_Monty.framework */; };
+		B57E2451264BF3F500ECD996 /* EposideListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57E2450264BF3F500ECD996 /* EposideListViewModel.swift */; };
+		B57E2455264C0EBF00ECD996 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57E2454264C0EBF00ECD996 /* CustomAlert.swift */; };
 		B5B462F7264AA2AC007EB8EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B462F6264AA2AC007EB8EA /* AppDelegate.swift */; };
 		B5B462F9264AA2AC007EB8EA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B462F8264AA2AC007EB8EA /* SceneDelegate.swift */; };
 		B5B462FB264AA2AC007EB8EA /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B462FA264AA2AC007EB8EA /* CharactersViewController.swift */; };
@@ -29,6 +31,8 @@
 /* Begin PBXFileReference section */
 		464C0CAA6E3B2F5B2AA6BF90 /* Pods-Rick and Monty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rick and Monty.debug.xcconfig"; path = "Target Support Files/Pods-Rick and Monty/Pods-Rick and Monty.debug.xcconfig"; sourceTree = "<group>"; };
 		52443D63F3FFD4B0FA8869B1 /* Pods_Rick_and_Monty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rick_and_Monty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B57E2450264BF3F500ECD996 /* EposideListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EposideListViewModel.swift; sourceTree = "<group>"; };
+		B57E2454264C0EBF00ECD996 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		B5B462F3264AA2AC007EB8EA /* Rick and Monty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rick and Monty.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B462F6264AA2AC007EB8EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5B462F8264AA2AC007EB8EA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,14 +95,14 @@
 		B5B462F5264AA2AC007EB8EA /* Rick and Monty */ = {
 			isa = PBXGroup;
 			children = (
-				B5B46316264ACD12007EB8EA /* Extensions */,
 				B5B4630A264AA33E007EB8EA /* Controllers */,
 				B5B46310264AA3A8007EB8EA /* Managers */,
-				B5B4630F264AA363007EB8EA /* Resources */,
-				B5B4630E264AA35F007EB8EA /* Models */,
-				B5B4630D264AA355007EB8EA /* Support Files */,
 				B5B4630C264AA349007EB8EA /* ViewModels */,
+				B5B4630E264AA35F007EB8EA /* Models */,
+				B5B46316264ACD12007EB8EA /* Extensions */,
+				B5B4630F264AA363007EB8EA /* Resources */,
 				B5B4630B264AA345007EB8EA /* Views */,
+				B5B4630D264AA355007EB8EA /* Support Files */,
 			);
 			path = "Rick and Monty";
 			sourceTree = "<group>";
@@ -106,8 +110,8 @@
 		B5B4630A264AA33E007EB8EA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B5B46320264AFCEA007EB8EA /* Other */,
 				B5B4631F264AFC07007EB8EA /* Core */,
+				B5B46320264AFCEA007EB8EA /* Other */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -115,6 +119,7 @@
 		B5B4630B264AA345007EB8EA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B57E2454264C0EBF00ECD996 /* CustomAlert.swift */,
 				B5B46313264AC31B007EB8EA /* Cells */,
 				B5B462FC264AA2AC007EB8EA /* Main.storyboard */,
 				B5B462FF264AA2B0007EB8EA /* Assets.xcassets */,
@@ -127,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				B5B4631D264ADAA6007EB8EA /* CharacterListViewModel.swift */,
+				B57E2450264BF3F500ECD996 /* EposideListViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -325,12 +331,14 @@
 			files = (
 				B5B46318264ACD25007EB8EA /* UIView+Extensions.swift in Sources */,
 				B5B46328264B34F7007EB8EA /* String+Extensions.swift in Sources */,
+				B57E2451264BF3F500ECD996 /* EposideListViewModel.swift in Sources */,
 				B5B46315264AC362007EB8EA /* CharacterCollectionViewCell.swift in Sources */,
 				B5B46312264AA40A007EB8EA /* AppCoordinator.swift in Sources */,
 				B5B4631C264AD26C007EB8EA /* Characters.swift in Sources */,
 				B5B4631E264ADAA6007EB8EA /* CharacterListViewModel.swift in Sources */,
 				B5B46326264B333F007EB8EA /* Eposide.swift in Sources */,
 				B5B4631A264AD0F3007EB8EA /* APICaller.swift in Sources */,
+				B57E2455264C0EBF00ECD996 /* CustomAlert.swift in Sources */,
 				B5B462FB264AA2AC007EB8EA /* CharactersViewController.swift in Sources */,
 				B5B46322264AFD0B007EB8EA /* CharacterDetailsViewController.swift in Sources */,
 				B5B462F7264AA2AC007EB8EA /* AppDelegate.swift in Sources */,
